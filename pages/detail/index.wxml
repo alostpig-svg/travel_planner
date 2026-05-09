@@ -1,0 +1,92 @@
+<view class="page-shell detail-page" wx:if="{{item}}">
+  <view class="card detail-hero">
+    <view class="detail-top">
+      <view class="detail-copy">
+        <view class="title-xl">{{item.name}}</view>
+        <view class="muted detail-subtitle">{{cityName}} · {{item.type === 'spot' ? '景点' : item.type === 'food' ? '餐饮' : '住宿'}}</view>
+      </view>
+      <view class="score">{{item.recommendScore}}</view>
+    </view>
+    <view class="detail-chip-row">
+      <view class="chip green">{{item.statusTags[0]}}</view>
+      <view class="chip">{{item.updatedAt}}</view>
+      <view class="chip">{{item.area}}</view>
+    </view>
+  </view>
+
+  <view class="section card">
+    <view class="title-lg">推荐结论</view>
+    <view class="muted section-copy">{{item.recommendReason}}</view>
+    <view wx:if="{{item.decision}}" class="decision-chip-row">
+      <view class="chip dark">{{item.decision}}</view>
+      <view wx:if="{{item.routeRole}}" class="chip">{{item.routeRole}}</view>
+    </view>
+  </view>
+
+  <view class="section card">
+    <view class="title-lg">真实体验摘要</view>
+    <view class="muted section-copy">{{item.summary}}</view>
+    <view class="divider"></view>
+    <view class="title-lg">避雷提醒</view>
+    <view class="muted section-copy">{{item.riskTips}}</view>
+  </view>
+
+  <view class="section card" wx:if="{{item.bestFor || item.avoidIf || item.alternatives}}">
+    <view class="title-lg">怎么选更值</view>
+    <view wx:if="{{item.bestFor}}" class="decision-row">
+      <view class="decision-label">适合谁</view>
+      <view class="muted">{{item.bestFor}}</view>
+    </view>
+    <view wx:if="{{item.avoidIf}}" class="decision-row">
+      <view class="decision-label">什么情况下别去</view>
+      <view class="muted">{{item.avoidIf}}</view>
+    </view>
+    <view wx:if="{{item.alternatives && item.alternatives.length}}" class="decision-row">
+      <view class="decision-label">可替代项</view>
+      <view class="decision-alt-row">
+        <block wx:for="{{item.alternatives}}" wx:key="index">
+          <view class="chip">{{item}}</view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="section card">
+    <view class="title-lg">标签</view>
+    <view class="tag-row">
+      <block wx:for="{{item.tags}}" wx:key="index">
+        <view class="chip">{{item}}</view>
+      </block>
+    </view>
+  </view>
+
+  <view class="section card">
+    <view class="title-lg">实用信息</view>
+    <view class="info-list">
+      <view class="info-row">
+        <view class="info-label">开放时间</view>
+        <view class="info-value">{{item.openTime}} - {{item.closeTime}}</view>
+      </view>
+      <view wx:if="{{item.type !== 'hotel'}}" class="info-row">
+        <view class="info-label">建议停留</view>
+        <view class="info-value">{{item.suggestStayMinutes}} 分钟</view>
+      </view>
+      <view wx:if="{{item.type === 'hotel'}}" class="info-row">
+        <view class="info-label">参考房费</view>
+        <view class="info-value">{{item.nightlyPriceRange || item.avgCost}} 元/晚</view>
+      </view>
+      <view wx:if="{{item.type === 'hotel' && item.stayStyle}}" class="info-row">
+        <view class="info-label">住宿风格</view>
+        <view class="info-value">{{item.stayStyle}}</view>
+      </view>
+      <view class="info-row">
+        <view class="info-label">交通方式</view>
+        <view class="info-value">{{item.trafficAccess}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="btn {{isFavorite ? 'secondary' : ''}}" bindtap="toggleFavorite">{{isFavorite ? '取消收藏' : '收藏到我的'}}</view>
+  </view>
+</view>

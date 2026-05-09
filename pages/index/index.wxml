@@ -1,0 +1,110 @@
+<view class="page-shell home-page">
+  <view class="hero-panel">
+    <view class="hero-topline">REAL TRAVEL, QUIETLY DESIGNED</view>
+    <view class="hero-title-wrap">
+      <view class="title-xl">Travel Planner</view>
+      <view class="hero-badge">Curated Routes</view>
+    </view>
+    <view class="hero-copy">Turn city research into a route you can actually follow.</view>
+    <view class="hero-metrics">
+      <view class="metric-card">
+        <view class="metric-value">{{days}} D</view>
+        <view class="metric-label">Preset</view>
+      </view>
+      <view class="metric-card">
+        <view class="metric-value">{{destinations[destinationIndex].name}}</view>
+        <view class="metric-label">City</view>
+      </view>
+      <view class="metric-card">
+        <view class="metric-value">{{selectedMode === 'relaxed' ? 'Relaxed' : 'Fast'}}</view>
+        <view class="metric-label">Mode</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="row section-head compact-head">
+      <view class="title-lg">Cities</view>
+      <view class="muted" bindtap="goDestination">See all</view>
+    </view>
+    <view class="city-list">
+      <block wx:for="{{destinations}}" wx:key="id">
+        <view class="city-card {{destinationIndex === index ? 'active' : ''}}" data-index="{{index}}" bindtap="onSelectDestination">
+          <view class="city-name">{{item.name}}</view>
+          <view class="city-tags">{{item.tags.join(' · ')}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="section card generator-card">
+    <view class="row section-head compact-head">
+      <view class="title-lg">Build Route</view>
+      <view class="muted">Pick city and pace</view>
+    </view>
+
+    <view class="mode-grid">
+      <view class="mode-card {{selectedMode === 'relaxed' ? 'active relaxed' : ''}}" data-mode="relaxed" bindtap="onModeChange">
+        <view class="mode-title">Relaxed</view>
+        <view class="mode-copy">Less rushing, more staying, more real travel.</view>
+      </view>
+      <view class="mode-card {{selectedMode === 'hardcore' ? 'active hardcore' : ''}}" data-mode="hardcore" bindtap="onModeChange">
+        <view class="mode-title">Fast</view>
+        <view class="mode-copy">Higher coverage for short and efficient trips.</view>
+      </view>
+    </view>
+
+    <view class="control-grid">
+      <view class="control-box">
+        <view class="mini-label">Days</view>
+        <picker mode="selector" range="{{['1 day','2 days','3 days','4 days','5 days']}}" bindchange="onDaysChange">
+          <view class="mini-value">{{days}} days</view>
+        </picker>
+      </view>
+      <view class="control-box">
+        <view class="mini-label">Budget</view>
+        <picker mode="selector" range="{{['low','medium','high']}}" bindchange="onBudgetChange">
+          <view class="mini-value">{{budgetLevel}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="pref-block">
+      <view class="mini-label">Tags</view>
+      <view class="pref-row">
+        <view class="chip {{preferences.includes('food') ? 'dark' : ''}}" data-value="food" bindtap="onPreferenceTap">Food</view>
+        <view class="chip {{preferences.includes('photo') ? 'dark' : ''}}" data-value="photo" bindtap="onPreferenceTap">Photo</view>
+        <view class="chip {{preferences.includes('night') ? 'dark' : ''}}" data-value="night" bindtap="onPreferenceTap">Night</view>
+        <view class="chip {{preferences.includes('culture') ? 'dark' : ''}}" data-value="culture" bindtap="onPreferenceTap">Culture</view>
+      </view>
+    </view>
+
+    <view class="btn generate-btn" bindtap="goRoute">Generate Route</view>
+  </view>
+
+  <view class="section">
+    <view class="row section-head compact-head">
+      <view class="title-lg">Preview</view>
+      <view class="muted">See structure first</view>
+    </view>
+    <view class="card preview-card" wx:if="{{routePreview}}">
+      <view class="preview-top">
+        <view>
+          <view class="item-title">{{routePreview.destination}} · {{routePreview.mode === 'relaxed' ? 'Relaxed' : 'Fast'}}</view>
+          <view class="muted">{{routePreview.paceDesc}}</view>
+        </view>
+        <view class="preview-badge">{{routePreview.days}} D</view>
+      </view>
+
+      <block wx:for="{{routePreview.dayPlans}}" wx:key="dayNumber">
+        <view class="day-preview">
+          <view class="row">
+            <view class="day-title">Day {{item.dayNumber}} · {{item.dayTitle}}</view>
+            <view class="day-area">{{item.area}}</view>
+          </view>
+          <view class="muted day-route">{{item.items[1].placeName}} -> {{item.items[item.items.length - 1].placeName}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

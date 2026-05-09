@@ -1,0 +1,52 @@
+<view class="page-shell">
+  <view class="card">
+    <view class="title-xl">我的</view>
+    <view class="muted" style="margin-top: 12rpx;">查看收藏、保存路线和最近操作。</view>
+  </view>
+
+  <view class="section">
+    <view class="title-lg">收藏</view>
+    <view wx:if="{{favorites.length}}" class="list">
+      <block wx:for="{{favorites}}" wx:key="id">
+        <view class="card item-card">
+          <view class="item-title">{{item.name}}</view>
+          <view class="muted" style="margin-top: 8rpx;">{{item.cityName}} · {{item.summary}}</view>
+          <view style="margin-top: 12rpx;">
+            <view class="chip green">{{item.type === 'spot' ? '景点' : '餐厅'}}</view>
+            <view class="chip">{{item.updatedAt}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <empty-state wx:else text="还没有收藏内容"></empty-state>
+  </view>
+
+  <view class="section">
+    <view class="title-lg">保存路线</view>
+    <view wx:if="{{routes.length}}" class="list">
+      <block wx:for="{{routes}}" wx:key="routeId">
+        <view class="card item-card">
+          <view class="item-title">{{item.destination}} · {{item.mode === 'relaxed' ? '松弛游' : '特种兵'}}</view>
+          <view class="muted" style="margin-top: 8rpx;">{{item.days}} 天 · {{item.paceDesc}}</view>
+          <view style="margin-top: 12rpx;">
+            <view class="chip green">{{item.savedAt}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <empty-state wx:else text="还没有保存路线"></empty-state>
+  </view>
+
+  <view class="section">
+    <view class="title-lg">最近操作</view>
+    <view wx:if="{{history.length}}" class="list">
+      <block wx:for="{{history}}" wx:key="id">
+        <view class="card item-card">
+          <view class="item-title">{{item.name}}</view>
+          <view class="muted" style="margin-top: 8rpx;">{{item.type}}</view>
+        </view>
+      </block>
+    </view>
+    <empty-state wx:else text="还没有最近记录"></empty-state>
+  </view>
+</view>

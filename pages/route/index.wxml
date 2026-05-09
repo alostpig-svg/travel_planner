@@ -1,0 +1,198 @@
+<view class="page-shell route-page">
+  <view class="hero-card {{mode}}">
+    <view class="hero-kicker">Route Engine</view>
+    <view class="title-xl">路线生成器</view>
+    <view class="muted hero-copy">按照你的时间和节奏，把景点、正餐、补给、住宿和地图路径整理成一份可执行行程。</view>
+
+    <view class="config-grid">
+      <view class="config-card">
+        <view class="mini-label">目的地</view>
+        <picker mode="selector" range="{{destinations}}" bindchange="onDestinationChange">
+          <view class="mini-value">{{destination}}</view>
+        </picker>
+      </view>
+      <view class="config-card">
+        <view class="mini-label">天数</view>
+        <picker mode="selector" range="{{['1天','2天','3天','4天','5天']}}" bindchange="onDaysChange">
+          <view class="mini-value">{{days}} 天</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="mode-switch">
+      <view class="mode-pill {{mode === 'relaxed' ? 'active' : ''}}" data-mode="relaxed" bindtap="onModeTap">松弛游</view>
+      <view class="mode-pill {{mode === 'hardcore' ? 'active' : ''}}" data-mode="hardcore" bindtap="onModeTap">特种兵</view>
+    </view>
+
+    <view class="mode-hero">
+      <view class="mode-hero-title">{{modeMeta[mode].title}}</view>
+      <view class="muted">{{modeMeta[mode].subtitle}}</view>
+      <view class="hero-chip-row">
+        <block wx:for="{{modeMeta[mode].badges}}" wx:key="index">
+          <view class="chip {{mode === 'hardcore' ? 'light' : ''}}">{{item}}</view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="section card summary-card" wx:if="{{route}}">
+    <view class="summary-top">
+      <view>
+        <view class="title-lg">{{route.destination}} · {{route.mode === 'relaxed' ? '松弛游' : '特种兵'}}</view>
+        <view class="muted summary-copy">{{route.paceDesc}}</view>
+      </view>
+      <view class="budget">{{route.budgetEstimate}}</view>
+    </view>
+
+    <view class="summary-grid">
+      <view class="summary-box">
+        <view class="summary-label">玩法密度</view>
+        <view class="summary-value">{{modeMeta[mode].density}}</view>
+      </view>
+      <view class="summary-box">
+        <view class="summary-label">体力感受</view>
+        <view class="summary-value">{{modeMeta[mode].energy}}</view>
+      </view>
+      <view class="summary-box">
+        <view class="summary-label">游玩天数</view>
+        <view class="summary-value">{{route.days}} 天</view>
+      </view>
+      <view class="summary-box">
+        <view class="summary-label">偏好标签</view>
+        <view class="summary-value">{{preferences.join(' / ')}}</view>
+      </view>
+    </view>
+
+    <view class="summary-chip-row">
+      <view class="chip green">{{route.fitSummary}}</view>
+      <view class="chip">{{modeMeta[mode].title}}</view>
+    </view>
+  </view>
+
+  <view class="section card stay-panel" wx:if="{{route && route.stayPlan}}">
+    <view class="row section-row">
+      <view class="title-lg">{{route.stayPlan.title}}</view>
+      <view class="muted">住宿已纳入路线</view>
+    </view>
+    <view class="muted panel-copy">{{route.stayPlan.summary}}</view>
+    <view wx:if="{{route.stayPlan.nightStrategy}}" class="muted">{{route.stayPlan.nightStrategy}}</view>
+
+    <view class="stay-list">
+      <block wx:for="{{route.stayPlan.items}}" wx:key="id">
+        <view class="stay-card">
+          <view class="row">
+            <view>
+              <view class="item-title">{{item.name}}</view>
+              <view class="muted">{{item.area}} · {{item.stayStyle}}</view>
+            </view>
+            <view class="stay-price">{{item.nightlyPriceRange}}</view>
+          </view>
+          <view class="muted stay-copy">{{item.decision}}</view>
+          <view class="stay-chip-row">
+            <view class="chip">{{item.routeRole}}</view>
+            <view class="chip">{{item.qualityLabel}}</view>
+            <view class="chip">{{item.sourcePlatform.join(' / ')}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view wx:if="{{route.stayPlan.assignments && route.stayPlan.assignments.length}}" class="assignment-row">
+      <block wx:for="{{route.stayPlan.assignments}}" wx:key="dayNumber">
+        <view class="chip {{item.isSwitchNight ? 'hotel-chip' : ''}}">{{item.transitionText}}</view>
+      </block>
+    </view>
+  </view>
+
+  <view class="section card map-panel" wx:if="{{route}}">
+    <view class="row section-row">
+      <view class="title-lg">地图路线</view>
+      <view class="muted">按天查看动线</view>
+    </view>
+
+    <view class="day-switcher">
+      <block wx:for="{{route.dayPlans}}" wx:key="dayNumber">
+        <view class="day-pill {{currentDayIndex === index ? 'active ' + mode : ''}}" data-index="{{index}}" bindtap="onDayMapChange">
+          Day {{item.dayNumber}}
+        </view>
+      </block>
+    </view>
+
+    <view wx:if="{{dayMap && dayMap.center}}" class="map-wrap">
+      <view class="map-legend">
+        <block wx:for="{{dayMap.legend}}" wx:key="label">
+          <view class="legend-item">
+            <view class="legend-dot" style="background: {{item.color}};"></view>
+            <text class="legend-text">{{item.label}}</text>
+          </view>
+        </block>
+      </view>
+
+      <map
+        class="route-map"
+        latitude="{{dayMap.center.latitude}}"
+        longitude="{{dayMap.center.longitude}}"
+        scale="13"
+        markers="{{dayMap.markers}}"
+        polyline="{{dayMap.polylines}}"
+        show-location="false"
+      ></map>
+
+      <view class="map-path">
+        <block wx:for="{{dayMap.pathNames}}" wx:key="index">
+          <view class="path-chip">
+            <text class="path-index" style="background: {{item.color}};">{{item.sequence}}</text>
+            <view class="path-main">
+              <text class="path-title">{{item.title}}</text>
+              <text class="path-type">{{item.label}}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <empty-state wx:else text="当前这一天还没有可展示的坐标点位"></empty-state>
+  </view>
+
+  <view class="section" wx:if="{{route}}">
+    <block wx:for="{{route.dayPlans}}" wx:key="dayNumber">
+      <view class="card day-card">
+        <view class="row day-head">
+          <view class="day-head-copy">
+            <view class="title-lg">Day {{item.dayNumber}} · {{item.dayTitle}}</view>
+            <view class="muted">{{item.area}} · {{item.trafficSummary}}</view>
+            <view wx:if="{{item.stayMeta}}" class="muted">{{item.stayMeta.stayTransition}}</view>
+          </view>
+          <view class="day-duration {{mode}}">{{item.totalDuration}}</view>
+        </view>
+
+        <view class="divider"></view>
+
+        <block wx:for="{{item.items}}" wx:key="index">
+          <view class="timeline {{mode}}">
+            <view class="timeline-time">{{item.startTime}} - {{item.endTime}}</view>
+            <view class="timeline-main">
+              <view class="timeline-dot {{item.placeType}}"></view>
+              <view class="timeline-title">{{item.placeName}}</view>
+              <view class="muted">{{item.action}}</view>
+              <view class="muted timeline-reason">{{item.reason}}</view>
+              <view wx:if="{{item.latitude && item.longitude}}" class="muted timeline-map-tip">可在上方地图查看位置与顺序</view>
+              <view class="timeline-chips">
+                <view class="chip">{{item.updatedAt}}</view>
+                <view class="chip red">{{item.tips}}</view>
+                <view wx:if="{{item.placeType === 'food'}}" class="chip green">吃饭补给</view>
+                <view wx:if="{{item.placeType === 'spot' && mode === 'hardcore'}}" class="chip">高效覆盖</view>
+                <view wx:if="{{item.placeType === 'spot' && mode === 'relaxed'}}" class="chip">慢慢停留</view>
+                <view wx:if="{{item.placeType === 'hotel'}}" class="chip hotel-chip">今晚住宿</view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+  </view>
+
+  <view class="section">
+    <view class="btn" bindtap="onSaveRoute">保存路线</view>
+  </view>
+</view>

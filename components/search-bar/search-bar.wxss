@@ -1,0 +1,9 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 24rpx;
+  background: #fff;
+}
+.icon { color: #9ca3af; }

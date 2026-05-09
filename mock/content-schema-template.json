@@ -1,0 +1,221 @@
+{
+  "city": "苏州",
+  "items": [
+    {
+      "id": "sz_spot_template_001",
+      "name": "示例点位",
+      "type": "spot",
+      "area": "平江路-观前街",
+      "subArea": "平江路",
+      "latitude": 31.3167,
+      "longitude": 120.6396,
+      "openTime": "09:00",
+      "closeTime": "21:00",
+      "avgCost": 0,
+      "ticketPrice": 0,
+      "updatedAt": "2026-05-09",
+      "decision": "顺路更值",
+      "worthLevel": "顺路更值",
+      "bestFor": [
+        "第一次来苏州的人",
+        "喜欢慢逛的人"
+      ],
+      "avoidFor": [
+        "只想看强景点的人"
+      ],
+      "recommendReason": "适合放在古城路线中段，给路线增加生活感和松弛感。",
+      "riskTips": "高峰期人多，主街商业化偏明显。",
+      "alternatives": [
+        "山塘街",
+        "十全街"
+      ],
+      "routeRole": "中段串联",
+      "bestVisitTime": "下午",
+      "suggestStayMinutes": 90,
+      "fitModes": [
+        "relaxed",
+        "hardcore"
+      ],
+      "isMainSpot": false,
+      "isOptionalSpot": true,
+      "experienceTags": [
+        "citywalk",
+        "生活感",
+        "拍照"
+      ],
+      "realFeeling": "更适合慢慢逛和边走边停，不适合抱着每一步都很惊艳的预期。",
+      "revisitLevel": "可二刷",
+      "recentHeat": "近期讨论度稳定",
+      "crowdLevel": "周末偏高",
+      "recentTips": "建议避开午后最拥挤时间段。",
+      "seasonalNote": "春秋更舒服，夏天偏热。",
+      "eventNote": "",
+      "recentRisk": "节假日体验会被人流拉低。",
+      "weiboUpdatedAt": "2026-05-09",
+      "sourcePlatform": [
+        "高德",
+        "微博",
+        "大众点评"
+      ],
+      "sourceUrl": [
+        "https://example.com/source-1",
+        "https://example.com/source-2"
+      ],
+      "sourceTitle": [
+        "示例来源标题 1",
+        "示例来源标题 2"
+      ],
+      "trustLevel": "medium",
+      "foodType": "",
+      "tasteTags": [],
+      "queueLevel": "",
+      "isWorthSpecialTrip": false,
+      "shopStyle": "",
+      "restValue": "",
+      "photoValue": ""
+    },
+    {
+      "id": "sz_food_template_001",
+      "name": "示例餐厅",
+      "type": "food",
+      "area": "太湖-西山岛",
+      "subArea": "西山岛",
+      "latitude": 31.1209,
+      "longitude": 120.2361,
+      "openTime": "10:30",
+      "closeTime": "20:30",
+      "avgCost": 110,
+      "ticketPrice": 0,
+      "updatedAt": "2026-05-09",
+      "decision": "值得安排一顿",
+      "worthLevel": "值得专门去",
+      "bestFor": [
+        "自驾玩西山岛的人",
+        "想吃太湖湖鲜的人"
+      ],
+      "avoidFor": [
+        "只想快速打卡回城的人"
+      ],
+      "recommendReason": "它不只是吃饭点，更是太湖线的一顿正餐锚点。",
+      "riskTips": "店与店差异大，最好只保留你自己筛过的版本。",
+      "alternatives": [
+        "本地小炒馆"
+      ],
+      "routeRole": "午餐锚点",
+      "bestVisitTime": "中午",
+      "suggestStayMinutes": 80,
+      "fitModes": [
+        "relaxed"
+      ],
+      "isMainSpot": false,
+      "isOptionalSpot": false,
+      "experienceTags": [
+        "湖鲜",
+        "路线锚点",
+        "正餐"
+      ],
+      "realFeeling": "如果西山岛不留一顿饭，这条线的完整感会弱很多。",
+      "revisitLevel": "看店而定",
+      "recentHeat": "周末热度偏高",
+      "crowdLevel": "饭点偏高",
+      "recentTips": "建议错开 12 点整到店。",
+      "seasonalNote": "春末夏初和秋天更舒服。",
+      "eventNote": "",
+      "recentRisk": "节假日等位和停车压力会更大。",
+      "weiboUpdatedAt": "2026-05-09",
+      "sourcePlatform": [
+        "大众点评",
+        "美团",
+        "微博"
+      ],
+      "sourceUrl": [
+        "https://example.com/food-source-1"
+      ],
+      "sourceTitle": [
+        "示例餐厅来源标题"
+      ],
+      "trustLevel": "medium",
+      "foodType": "农家乐 / 湖鲜",
+      "tasteTags": [
+        "太湖三白",
+        "正餐"
+      ],
+      "queueLevel": "中等",
+      "isWorthSpecialTrip": true,
+      "shopStyle": "",
+      "restValue": "",
+      "photoValue": ""
+    },
+    {
+      "id": "sz_cafe_template_001",
+      "name": "示例咖啡店",
+      "type": "cafe",
+      "area": "十全街",
+      "subArea": "十全街",
+      "latitude": 31.3022,
+      "longitude": 120.6379,
+      "openTime": "10:00",
+      "closeTime": "22:00",
+      "avgCost": 38,
+      "ticketPrice": 0,
+      "updatedAt": "2026-05-09",
+      "decision": "适合当缓冲点",
+      "worthLevel": "顺路更值",
+      "bestFor": [
+        "情侣",
+        "松弛游用户",
+        "下午想坐一会的人"
+      ],
+      "avoidFor": [
+        "特种兵路线"
+      ],
+      "recommendReason": "它的价值不是非喝不可，而是让路线节奏舒服下来。",
+      "riskTips": "如果当天行程很满，这类点位优先级会自然下降。",
+      "alternatives": [
+        "茶馆",
+        "双塔市集"
+      ],
+      "routeRole": "下午休息点",
+      "bestVisitTime": "下午",
+      "suggestStayMinutes": 50,
+      "fitModes": [
+        "relaxed"
+      ],
+      "isMainSpot": false,
+      "isOptionalSpot": true,
+      "experienceTags": [
+        "休息",
+        "拍照",
+        "citywalk"
+      ],
+      "realFeeling": "更适合走累了停下来，而不是为了专门打卡跑一趟。",
+      "revisitLevel": "可二刷",
+      "recentHeat": "近期稳定",
+      "crowdLevel": "周末下午偏高",
+      "recentTips": "阴雨天更适合作为缓冲点。",
+      "seasonalNote": "四季都可安排。",
+      "eventNote": "",
+      "recentRisk": "",
+      "weiboUpdatedAt": "2026-05-09",
+      "sourcePlatform": [
+        "大众点评",
+        "微博",
+        "豆瓣"
+      ],
+      "sourceUrl": [
+        "https://example.com/cafe-source-1"
+      ],
+      "sourceTitle": [
+        "示例咖啡店来源标题"
+      ],
+      "trustLevel": "medium",
+      "foodType": "",
+      "tasteTags": [],
+      "queueLevel": "低",
+      "isWorthSpecialTrip": false,
+      "shopStyle": "安静 / 适合发呆",
+      "restValue": "high",
+      "photoValue": "medium"
+    }
+  ]
+}

@@ -1,0 +1,405 @@
+{
+  "city": "苏州",
+  "theme": "太湖-西山岛候选内容",
+  "updatedAt": "2026-05-09",
+  "items": [
+    {
+      "id": "sz_spot_candidate_001",
+      "name": "西山岛",
+      "type": "spot",
+      "area": "太湖-西山岛",
+      "subArea": "西山岛主线",
+      "latitude": 31.1256,
+      "longitude": 120.2318,
+      "openTime": "00:00",
+      "closeTime": "23:59",
+      "avgCost": 0,
+      "ticketPrice": 0,
+      "updatedAt": "2026-05-09",
+      "decision": "很适合单独拉出半天到一天",
+      "worthLevel": "值得专门去",
+      "bestFor": [
+        "自驾用户",
+        "情侣",
+        "想看湖景和走路线的人"
+      ],
+      "avoidFor": [
+        "完全依赖公共交通且时间很短的人"
+      ],
+      "recommendReason": "它更像路线型目的地，不是靠一个大景点撑起来，而是靠环湖、停留、看湖、吃饭组成完整体验。",
+      "riskTips": "不建议和古城重度路线硬塞同一天，不然来回转场会很累。",
+      "alternatives": [
+        "金鸡湖",
+        "苏州古城第三天收尾线"
+      ],
+      "routeRole": "外扩线主角",
+      "bestVisitTime": "晴天半天到一天",
+      "suggestStayMinutes": 240,
+      "fitModes": [
+        "relaxed"
+      ],
+      "isMainSpot": true,
+      "isOptionalSpot": false,
+      "experienceTags": [
+        "环湖",
+        "自驾",
+        "看日落",
+        "慢游"
+      ],
+      "realFeeling": "如果你已经看够了古城园林，西山岛会让苏州这趟旅行多出一种更开阔、更松弛的层次。",
+      "revisitLevel": "可二刷",
+      "recentHeat": "西山岛一日游和环岛自驾内容热度较高",
+      "crowdLevel": "周末偏高",
+      "recentTips": "热门内容高度集中在一日游、自驾、日落机位。",
+      "seasonalNote": "春秋更舒服，天气晴朗时体验更完整。",
+      "eventNote": "吴中太湖文旅会持续发布周边活动和新线索。",
+      "recentRisk": "节假日交通和停车压力会上升。",
+      "weiboUpdatedAt": "2026-05-09",
+      "sourcePlatform": [
+        "苏州市政府",
+        "微博",
+        "公开游记聚合页"
+      ],
+      "sourceUrl": [
+        "https://www.suzhou.gov.cn/szsrmzf/szyw/202605/66cec651526f46fcbeeb1d57eabb93f5.shtml",
+        "https://www.weibo.com/1852451387/Pyigqsahl",
+        "https://baike.sogou.com/v8784111.htm"
+      ],
+      "sourceTitle": [
+        "苏州市政府太湖生态岛相关公开信息",
+        "吴中太湖文旅微博动态",
+        "太湖西山岛公开概况"
+      ],
+      "trustLevel": "high"
+    },
+    {
+      "id": "sz_spot_candidate_002",
+      "name": "明月湾古村",
+      "type": "spot",
+      "area": "太湖-西山岛",
+      "subArea": "明月湾",
+      "latitude": 31.0994,
+      "longitude": 120.2413,
+      "openTime": "09:00",
+      "closeTime": "16:00",
+      "avgCost": 0,
+      "ticketPrice": 32,
+      "updatedAt": "2026-05-09",
+      "decision": "适合和西山岛同日安排，不太适合单独跑",
+      "worthLevel": "顺路更值",
+      "bestFor": [
+        "想看湖边古村气质的人",
+        "傍晚散步拍照的人"
+      ],
+      "avoidFor": [
+        "只想追求高密度景点的人"
+      ],
+      "recommendReason": "它的优势不是景点体量，而是湖边村落氛围、古樟、石板街和与太湖线的顺路关系。",
+      "riskTips": "如果期待强商业配套或大景区冲击感，容易失望。",
+      "alternatives": [
+        "平江路",
+        "山塘街夜段"
+      ],
+      "routeRole": "太湖线中后段停留点",
+      "bestVisitTime": "傍晚前后",
+      "suggestStayMinutes": 90,
+      "fitModes": [
+        "relaxed",
+        "hardcore"
+      ],
+      "isMainSpot": false,
+      "isOptionalSpot": true,
+      "experienceTags": [
+        "古村",
+        "湖边",
+        "散步",
+        "拍照"
+      ],
+      "realFeeling": "它更像太湖线里的氛围停留点，而不是靠内容密度取胜的大景点。",
+      "revisitLevel": "看天气和同行人而定",
+      "recentHeat": "在西山岛一日游内容中出现频率较高",
+      "crowdLevel": "热门周末中等偏高",
+      "recentTips": "更适合放在下午到傍晚，不建议中午最晒的时候硬逛。",
+      "seasonalNote": "晴天和傍晚更有加成。",
+      "eventNote": "",
+      "recentRisk": "如果路线安排太赶，这里会变成走马观花。",
+      "weiboUpdatedAt": "2026-05-09",
+      "sourcePlatform": [
+        "苏州地方志",
+        "公开景点页"
+      ],
+      "sourceUrl": [
+        "https://dfzb.suzhou.gov.cn/dfzb/szdq/202409/5089e3ed21ec48a28afcfe828d1202a2.shtml",
+        "https://www.sanlidi.com/jingdian/scenic-78.html"
+      ],
+      "sourceTitle": [
+        "苏州地方志关于明月湾古村",
+        "公开景点页门票与开放时间信息"
+      ],
+      "trustLevel": "high"
+    },
+    {
+      "id": "sz_spot_candidate_003",
+      "name": "石公山",
+      "type": "spot",
+      "area": "太湖-西山岛",
+      "subArea": "石公山",
+      "latitude": 31.1147,
+      "longitude": 120.2276,
+      "openTime": "08:00",
+      "closeTime": "17:00",
+      "avgCost": 0,
+      "ticketPrice": 50,
+      "updatedAt": "2026-05-09",
+      "decision": "顺路看更值",
+      "worthLevel": "顺路更值",
+      "bestFor": [
+        "想补一个明确湖景视角的人",
+        "自驾顺路停靠的人"
+      ],
+      "avoidFor": [
+        "专门大绕路只看一个点的人"
+      ],
+      "recommendReason": "它更适合补足太湖视野，而不是承担整段行程主角的角色。",
+      "riskTips": "如果把它当成单独终点，预期容易过高。",
+      "alternatives": [
+        "西山岛环湖公路",
+        "金鸡湖"
+      ],
+      "routeRole": "视野补位点",
+      "bestVisitTime": "晴天白天",
+      "suggestStayMinutes": 70,
+      "fitModes": [
+        "hardcore",
+        "relaxed"
+      ],
+      "isMainSpot": false,
+      "isOptionalSpot": true,
+      "experienceTags": [
+        "看湖",
+        "顺路停靠",
+        "补视角"
+      ],
+      "realFeeling": "更像太湖线路上的补镜头，而不是需要单独奔赴的主景点。",
+      "revisitLevel": "一次够用",
+      "recentHeat": "在太湖线攻略里常作为顺路点出现",
+      "crowdLevel": "中等",
+      "recentTips": "适合和明月湾、西山岛同日串联。",
+      "seasonalNote": "晴天观感更好。",
+      "eventNote": "",
+      "recentRisk": "天气差时风景加成会明显下降。",
+      "weiboUpdatedAt": "2026-05-09",
+      "sourcePlatform": [
+        "苏州地方志",
+        "西山景区聚合页"
+      ],
+      "sourceUrl": [
+        "https://dfzb.suzhou.gov.cn/dfzb/szdq/202409/5089e3ed21ec48a28afcfe828d1202a2.shtml",
+        "https://www.xsdnjl.com/jingqu/"
+      ],
+      "sourceTitle": [
+        "地方志中明月湾与石公山位置关系",
+        "西山景区聚合门票页"
+      ],
+      "trustLevel": "medium"
+    },
+    {
+      "id": "sz_spot_candidate_004",
+      "name": "西山岛环湖公路",
+      "type": "spot",
+      "area": "太湖-西山岛",
+      "subArea": "环湖线",
+      "latitude": 31.1224,
+      "longitude": 120.2385,
+      "openTime": "00:00",
+      "closeTime": "23:59",
+      "avgCost": 0,
+      "ticketPrice": 0,
+      "updatedAt": "2026-05-09",
+      "decision": "很适合做成路线骨架",
+      "worthLevel": "值得专门去",
+      "bestFor": [
+        "自驾",
+        "拍照",
+        "想边走边停的人"
+      ],
+      "avoidFor": [
+        "不开车且不想把时间花在路上的人"
+      ],
+      "recommendReason": "这段内容最适合你的产品，因为它不是单点介绍，而是天然可转成路线表和地图动线。",
+      "riskTips": "不开车体验会打折，阴雨大风天气观感也会下降。",
+      "alternatives": [
+        "西山岛核心点位串联"
+      ],
+      "routeRole": "太湖线骨架",
+      "bestVisitTime": "晴天上午到傍晚",
+      "suggestStayMinutes": 120,
+      "fitModes": [
+        "relaxed"
+      ],
+      "isMainSpot": true,
+      "isOptionalSpot": false,
+      "experienceTags": [
+        "自驾",
+        "路线型玩法",
+        "看湖",
+        "停停走走"
+      ],
+      "realFeeling": "它更像一整段体验，而不是一个名字；对路线工具的价值比普通景点更大。",
+      "revisitLevel": "可二刷",
+      "recentHeat": "与一日游、自驾、日落机位内容高度相关",
+      "crowdLevel": "节假日偏高",
+      "recentTips": "适合把日落点和午餐点直接镶嵌进路线中。",
+      "seasonalNote": "春秋最舒服。",
+      "eventNote": "",
+      "recentRisk": "节假日自驾堵车和停车问题要提前预警。",
+      "weiboUpdatedAt": "2026-05-09",
+      "sourcePlatform": [
+        "微博",
+        "公开攻略页"
+      ],
+      "sourceUrl": [
+        "https://www.weibo.com/1852451387/Pyigqsahl",
+        "https://baike.sogou.com/v8784111.htm"
+      ],
+      "sourceTitle": [
+        "吴中太湖文旅相关动态",
+        "西山岛公开概况页"
+      ],
+      "trustLevel": "medium"
+    },
+    {
+      "id": "sz_food_candidate_001",
+      "name": "花床湖景农家菜·农家乐(太湖西山岛店)",
+      "type": "food",
+      "area": "太湖-西山岛",
+      "subArea": "石公路附近",
+      "latitude": 31.1149,
+      "longitude": 120.2285,
+      "openTime": "17:00",
+      "closeTime": "20:00",
+      "avgCost": 120,
+      "ticketPrice": 0,
+      "updatedAt": "2026-05-09",
+      "decision": "可作为太湖线正餐候选",
+      "worthLevel": "顺路更值",
+      "bestFor": [
+        "西山岛一日线午餐/晚餐",
+        "想吃湖景农家乐的人"
+      ],
+      "avoidFor": [
+        "只追求精致出品、不接受农家乐风格的人"
+      ],
+      "recommendReason": "公开评价里稳定提到湖景、出餐快、适合作为西山线的正餐停靠点。",
+      "riskTips": "更适合作为路线锚点，不建议单独把它当“专门奔赴的餐厅”。",
+      "alternatives": [
+        "西山岛其他农家乐"
+      ],
+      "routeRole": "太湖线正餐锚点",
+      "bestVisitTime": "午餐或傍晚",
+      "suggestStayMinutes": 80,
+      "fitModes": [
+        "relaxed"
+      ],
+      "isMainSpot": false,
+      "isOptionalSpot": false,
+      "experienceTags": [
+        "湖景",
+        "农家乐",
+        "正餐"
+      ],
+      "realFeeling": "更像“把路线坐实的一顿饭”，不是那种要单独为它专门跑的顶级餐厅。",
+      "revisitLevel": "看同线路需要",
+      "recentHeat": "公开游记和聚合平台有一定出现频率",
+      "crowdLevel": "饭点中等偏高",
+      "recentTips": "晴天露台位体验更好。",
+      "seasonalNote": "适合春秋和晴天。",
+      "eventNote": "",
+      "recentRisk": "公开平台存在营业状态波动，需要后续再二次核验。",
+      "weiboUpdatedAt": "",
+      "sourcePlatform": [
+        "Trip.com"
+      ],
+      "sourceUrl": [
+        "https://hk.trip.com/restaurant/china/suzhou/detail/restaurant-77914222"
+      ],
+      "sourceTitle": [
+        "花床湖景农家菜·农家乐(太湖西山岛店)"
+      ],
+      "trustLevel": "medium",
+      "foodType": "农家乐 / 湖鲜",
+      "tasteTags": [
+        "太湖湖鲜",
+        "正餐"
+      ],
+      "queueLevel": "中等",
+      "isWorthSpecialTrip": false
+    },
+    {
+      "id": "sz_food_candidate_002",
+      "name": "美味之家农家乐(西山店)",
+      "type": "food",
+      "area": "太湖-西山岛",
+      "subArea": "金庭游客中心附近",
+      "latitude": 31.1735,
+      "longitude": 120.2832,
+      "openTime": "11:00",
+      "closeTime": "21:00",
+      "avgCost": 110,
+      "ticketPrice": 0,
+      "updatedAt": "2026-05-09",
+      "decision": "可作为交通起讫点附近的顺路餐候选",
+      "worthLevel": "顺路更值",
+      "bestFor": [
+        "从游客中心附近出发或返回的人"
+      ],
+      "avoidFor": [
+        "只想找岛上最有风景感的一顿饭的人"
+      ],
+      "recommendReason": "从公开信息看，它更像方便衔接交通起点/终点的实用餐厅，而不是西山线里的风景主角。",
+      "riskTips": "公开聚合页出现过营业状态波动，需要后续再核实。",
+      "alternatives": [
+        "花床湖景农家菜"
+      ],
+      "routeRole": "起终点补给",
+      "bestVisitTime": "进岛前后",
+      "suggestStayMinutes": 70,
+      "fitModes": [
+        "hardcore",
+        "relaxed"
+      ],
+      "isMainSpot": false,
+      "isOptionalSpot": true,
+      "experienceTags": [
+        "顺路吃饭",
+        "游客中心附近"
+      ],
+      "realFeeling": "更偏实用型，适合作为路线衔接，而不是专门种草的主角。",
+      "revisitLevel": "看路线顺不顺",
+      "recentHeat": "公开平台有基础曝光",
+      "crowdLevel": "中等",
+      "recentTips": "如果最终做精选库，建议后续再补本地实测对比。",
+      "seasonalNote": "",
+      "eventNote": "",
+      "recentRisk": "营业状态要二次确认。",
+      "weiboUpdatedAt": "",
+      "sourcePlatform": [
+        "Trip.com"
+      ],
+      "sourceUrl": [
+        "https://hk.trip.com/restaurant/china/suzhou/detail/restaurant-30991530/"
+      ],
+      "sourceTitle": [
+        "美味之家农家乐(西山店)"
+      ],
+      "trustLevel": "low",
+      "foodType": "农家乐 / 家常菜",
+      "tasteTags": [
+        "家常菜",
+        "湖鲜"
+      ],
+      "queueLevel": "未知",
+      "isWorthSpecialTrip": false
+    }
+  ]
+}

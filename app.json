@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/destination/index",
+    "pages/detail/index",
+    "pages/route/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "真玩旅行规划",
+    "navigationBarBackgroundColor": "#f7f4ef",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f4ef",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,4 @@
+<view class="search-bar">
+  <text class="icon">⌕</text>
+  <input value="{{value}}" placeholder="{{placeholder}}" />
+</view>

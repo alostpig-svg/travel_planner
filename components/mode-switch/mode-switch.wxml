@@ -1,0 +1,4 @@
+<view class="mode-switch">
+  <view class="item {{value === 'relaxed' ? 'active' : ''}}">松弛游</view>
+  <view class="item {{value === 'hardcore' ? 'active' : ''}}">特种兵</view>
+</view>

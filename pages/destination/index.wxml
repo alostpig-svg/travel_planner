@@ -1,0 +1,86 @@
+<view class="page-shell destination-page">
+  <view class="card hero-card">
+    <view class="hero-kicker">Destination Library</view>
+    <view class="title-xl">目的地精选</view>
+    <view class="muted hero-copy">先看城市骨架，再看景点、餐饮和住宿的真正可用性。</view>
+  </view>
+
+  <view class="section">
+    <view class="title-lg">城市</view>
+    <view class="city-list">
+      <block wx:for="{{destinations}}" wx:key="id">
+        <view class="city-card {{currentCity.id === item.id ? 'active' : ''}}" data-index="{{index}}" bindtap="onSelectCity">
+          <view class="city-name">{{item.name}}</view>
+          <view class="city-copy">{{item.intro}}</view>
+          <view class="city-chip-row">
+            <view class="chip">{{item.suggestDays}} 天游玩</view>
+            <view class="chip green">{{item.bestMonths.join(' / ')}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="section card filter-card">
+    <view class="row section-row">
+      <view class="title-lg">{{currentCity.name}} 推荐</view>
+      <view class="muted">{{currentCity.bestMonths.join(' / ')}}</view>
+    </view>
+    <view class="filter-row">
+      <view class="chip {{category === 'all' ? 'dark' : ''}}" data-value="all" bindtap="onFilterTap">全部</view>
+      <view class="chip {{category === 'spot' ? 'dark' : ''}}" data-value="spot" bindtap="onFilterTap">景点</view>
+      <view class="chip {{category === 'food' ? 'dark' : ''}}" data-value="food" bindtap="onFilterTap">餐饮</view>
+      <view class="chip {{category === 'hotel' ? 'dark' : ''}}" data-value="hotel" bindtap="onFilterTap">住宿</view>
+    </view>
+
+    <view class="list">
+      <block wx:for="{{currentCity.spots}}" wx:key="id">
+        <view wx:if="{{category === 'all' || category === 'spot'}}" class="card item-card" data-id="{{item.id}}" data-type="spot" bindtap="onOpenDetail">
+          <view class="item-top">
+            <view>
+              <view class="item-title">{{item.name}}</view>
+              <view class="muted">{{item.summary}}</view>
+            </view>
+            <view class="score">{{item.recommendScore}}</view>
+          </view>
+          <view class="item-chip-row">
+            <view class="chip green">{{item.statusTags[0]}}</view>
+            <view class="chip">{{item.area}}</view>
+          </view>
+        </view>
+      </block>
+
+      <block wx:for="{{currentCity.foods}}" wx:key="id">
+        <view wx:if="{{category === 'all' || category === 'food'}}" class="card item-card" data-id="{{item.id}}" data-type="food" bindtap="onOpenDetail">
+          <view class="item-top">
+            <view>
+              <view class="item-title">{{item.name}}</view>
+              <view class="muted">{{item.summary}}</view>
+            </view>
+            <view class="score">{{item.recommendScore}}</view>
+          </view>
+          <view class="item-chip-row">
+            <view class="chip green">{{item.statusTags[0]}}</view>
+            <view class="chip">{{item.avgCost}} 元</view>
+          </view>
+        </view>
+      </block>
+
+      <block wx:for="{{currentCity.hotels}}" wx:key="id">
+        <view wx:if="{{category === 'all' || category === 'hotel'}}" class="card item-card" data-id="{{item.id}}" data-type="hotel" bindtap="onOpenDetail">
+          <view class="item-top">
+            <view>
+              <view class="item-title">{{item.name}}</view>
+              <view class="muted">{{item.summary}}</view>
+            </view>
+            <view class="score">{{item.recommendScore}}</view>
+          </view>
+          <view class="item-chip-row">
+            <view class="chip green">{{item.statusTags[0]}}</view>
+            <view class="chip">{{item.nightlyPriceRange || (item.avgCost + ' 元/晚')}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
