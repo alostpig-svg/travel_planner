@@ -18,3 +18,6 @@
 
 内容库模板：
 - `mock/content-schema-template.json`
+
+项目交接记忆：
+- `docs/project-memory.md`
