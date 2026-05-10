@@ -21,6 +21,51 @@
     </view>
   </view>
 
+  <view class="section card strategy-card" wx:if="{{currentCity.contentStrategy}}">
+    <view class="row section-row">
+      <view class="title-lg">{{currentCity.name}} 玩法策略</view>
+      <view class="muted">先定节奏，再定点位</view>
+    </view>
+    <view class="strategy-grid">
+      <view class="strategy-item">
+        <view class="strategy-label">第一次来</view>
+        <view class="strategy-value">{{currentCity.contentStrategy.firstTime}}</view>
+      </view>
+      <view class="strategy-item">
+        <view class="strategy-label">避开拥挤</view>
+        <view class="strategy-value">{{currentCity.contentStrategy.avoidCrowd}}</view>
+      </view>
+      <view class="strategy-item">
+        <view class="strategy-label">雨天备选</view>
+        <view class="strategy-value">{{currentCity.contentStrategy.rainyDay}}</view>
+      </view>
+      <view class="strategy-item">
+        <view class="strategy-label">适合谁来</view>
+        <view class="strategy-value">{{currentCity.contentStrategy.couplePick}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{currentCity.decisionCards && currentCity.decisionCards.length}}">
+    <view class="row section-row">
+      <view class="title-lg">{{currentCity.name}} 关键判断</view>
+      <view class="muted">几句就够</view>
+    </view>
+    <view class="decision-grid">
+      <block wx:for="{{currentCity.decisionCards}}" wx:key="index">
+        <view class="card decision-card">
+          <view class="decision-title">{{item.title}}</view>
+          <view class="decision-summary">{{item.summary}}</view>
+          <view class="decision-tags">
+            <block wx:for="{{item.tags}}" wx:key="index">
+              <view class="chip">{{item}}</view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
   <view class="section card filter-card">
     <view class="row section-row">
       <view class="title-lg">{{currentCity.name}} 推荐</view>

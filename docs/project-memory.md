@@ -23,6 +23,9 @@
 ## City Notes
 - `Suzhou`: focus on old town, Jinji Lake, and Taihu/Xishan.
 - `Suzhou` content should include real food, cafes, hotels, and route-linked map points.
+- `Jingdezhen`: focus on `陶阳里-御窑博物院`, `陶溪川创意街区`, `古窑-老城南线`, and `三宝国际瓷谷`.
+- `Jingdezhen` content should include museum-led history, heritage layers like `观音阁陶耕艺术聚落` and `湖田古瓷窑址`, night market / street activity, local snacks, and stay options near陶溪川 or陶阳里.
+- `Jingdezhen` now has a dedicated 3-day route template instead of relying only on the generic city route.
 - `Sanya`: core issue fixed was wrong markers, especially Houhai Village.
 - `Sanya` is split into `haitang`, `yalong`, and `urban` clusters for routing.
 

@@ -93,6 +93,38 @@ function cleanTagList(tags, fallbackTags) {
   return tags;
 }
 
+function cleanStrategy(strategy) {
+  if (!strategy || typeof strategy !== 'object') {
+    return null;
+  }
+
+  const pick = (value) => pickText(value, '');
+  const next = {
+    firstTime: pick(strategy.firstTime),
+    avoidCrowd: pick(strategy.avoidCrowd),
+    rainyDay: pick(strategy.rainyDay),
+    couplePick: pick(strategy.couplePick),
+    notWorthRush: pick(strategy.notWorthRush),
+    extensionRule: pick(strategy.extensionRule)
+  };
+
+  return Object.values(next).some(Boolean) ? next : null;
+}
+
+function cleanDecisionCards(cards) {
+  if (!Array.isArray(cards) || !cards.length) {
+    return [];
+  }
+
+  return cards
+    .map((card) => ({
+      title: pickText(card.title, ''),
+      summary: pickText(card.summary, ''),
+      tags: cleanTagList(card.tags, [])
+    }))
+    .filter((card) => card.title || card.summary || card.tags.length);
+}
+
 function sanitizeItem(item) {
   if (!item) {
     return item;
@@ -161,6 +193,8 @@ function sanitizeCity(city) {
     tip: pickText(city.tip, override.tip || ''),
     dayTitles: cleanTagList(city.dayTitles, override.dayTitles || []),
     areas: cleanTagList(city.areas, override.areas || []),
+    contentStrategy: cleanStrategy(city.contentStrategy),
+    decisionCards: cleanDecisionCards(city.decisionCards),
     spots: (city.spots || []).map(sanitizeItem),
     foods: (city.foods || []).map(sanitizeItem),
     hotels: (city.hotels || []).map(sanitizeItem)

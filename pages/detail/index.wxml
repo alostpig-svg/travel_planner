@@ -31,6 +31,11 @@
     <view class="muted section-copy">{{item.riskTips}}</view>
   </view>
 
+  <view class="section card" wx:if="{{cityName === '景德镇' && item.routeRole}}">
+    <view class="title-lg">路线角色</view>
+    <view class="muted section-copy">{{item.routeRole}}</view>
+  </view>
+
   <view class="section card" wx:if="{{item.bestFor || item.avoidIf || item.alternatives}}">
     <view class="title-lg">怎么选更值</view>
     <view wx:if="{{item.bestFor}}" class="decision-row">

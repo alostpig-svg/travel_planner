@@ -29,7 +29,13 @@ const DESTINATION_BOUNDS = {
     default: { minLat: 18.58, maxLat: 18.75, minLng: 110.22, maxLng: 110.31 }
   },
   jingdezhen: {
-    default: { minLat: 29.22, maxLat: 29.36, minLng: 117.15, maxLng: 117.28 }
+    default: { minLat: 29.22, maxLat: 29.36, minLng: 117.15, maxLng: 117.28 },
+    clusters: {
+      taoyang: { minLat: 29.304, maxLat: 29.321, minLng: 117.186, maxLng: 117.205 },
+      taoxichuan: { minLat: 29.300, maxLat: 29.314, minLng: 117.201, maxLng: 117.221 },
+      guyao: { minLat: 29.283, maxLat: 29.301, minLng: 117.168, maxLng: 117.191 },
+      sanbao: { minLat: 29.255, maxLat: 29.281, minLng: 117.228, maxLng: 117.255 }
+    }
   }
 };
 
@@ -87,6 +93,161 @@ function isPointInBounds(point, bounds) {
   );
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function distanceBetween(a, b) {
+  return Math.hypot(b.x - a.x, b.y - a.y);
+}
+
+function relaxSketchPoints(points, bounds, minSpacing) {
+  const next = points.map((point) => ({ ...point }));
+  const iterations = 8;
+  const maxX = bounds.width - 14;
+  const maxY = bounds.height - 14;
+
+  for (let round = 0; round < iterations; round += 1) {
+    for (let i = 0; i < next.length; i += 1) {
+      for (let j = i + 1; j < next.length; j += 1) {
+        const a = next[i];
+        const b = next[j];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.max(Math.hypot(dx, dy), 0.001);
+        if (dist >= minSpacing) {
+          continue;
+        }
+
+        const push = (minSpacing - dist) * 0.5;
+        const ux = dx / dist;
+        const uy = dy / dist;
+        a.x = clamp(a.x - ux * push, 14, maxX);
+        a.y = clamp(a.y - uy * push, 14, maxY);
+        b.x = clamp(b.x + ux * push, 14, maxX);
+        b.y = clamp(b.y + uy * push, 14, maxY);
+      }
+    }
+  }
+
+  return next;
+}
+
+function buildRouteSketch(dayPlan, currentStepIndex) {
+  if (!dayPlan || !Array.isArray(dayPlan.items)) {
+    return null;
+  }
+
+  const rawPoints = dayPlan.items
+    .filter((item) => isFiniteCoordinate(item.latitude) && isFiniteCoordinate(item.longitude))
+    .map((item, index) => ({
+      sequence: index + 1,
+      title: item.placeName,
+      placeType: item.placeType || 'spot',
+      latitude: item.latitude,
+      longitude: item.longitude,
+      state: index < currentStepIndex ? 'done' : index === currentStepIndex ? 'current' : 'todo'
+    }));
+
+  if (!rawPoints.length) {
+    return null;
+  }
+
+  const width = 150;
+  const height = 108;
+  const padding = 14;
+  const usableWidth = width - padding * 2;
+  const usableHeight = height - padding * 2;
+
+  const lats = rawPoints.map((point) => point.latitude);
+  const lngs = rawPoints.map((point) => point.longitude);
+  const minLat = Math.min(...lats);
+  const maxLat = Math.max(...lats);
+  const minLng = Math.min(...lngs);
+  const maxLng = Math.max(...lngs);
+  const latRange = Math.max(maxLat - minLat, 0.0001);
+  const lngRange = Math.max(maxLng - minLng, 0.0001);
+  const scale = Math.min(usableWidth / lngRange, usableHeight / latRange);
+  const contentWidth = lngRange * scale;
+  const contentHeight = latRange * scale;
+  const offsetX = (usableWidth - contentWidth) / 2;
+  const offsetY = (usableHeight - contentHeight) / 2;
+
+  const points = rawPoints.map((point) => ({
+    ...point,
+    x: padding + offsetX + (point.longitude - minLng) * scale,
+    y: padding + offsetY + (maxLat - point.latitude) * scale
+  }));
+
+  const relaxedPoints = relaxSketchPoints(points, { width, height }, 18);
+
+  const segments = [];
+  const bends = [];
+
+  for (let index = 0; index < relaxedPoints.length - 1; index += 1) {
+    const start = relaxedPoints[index];
+    const end = relaxedPoints[index + 1];
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const len = Math.max(distanceBetween(start, end), 1);
+    const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+    const nx = -dy / len;
+    const ny = dx / len;
+    const bendMagnitude = clamp(len * 0.18, 4, 10) * (index % 2 === 0 ? 1 : -1);
+    const bend = {
+      x: (start.x + end.x) / 2 + nx * bendMagnitude,
+      y: (start.y + end.y) / 2 + ny * bendMagnitude
+    };
+
+    const firstLen = Math.max(distanceBetween(start, bend), 1);
+    const secondLen = Math.max(distanceBetween(bend, end), 1);
+    const firstAngle = (Math.atan2(bend.y - start.y, bend.x - start.x) * 180) / Math.PI;
+    const secondAngle = (Math.atan2(end.y - bend.y, end.x - bend.x) * 180) / Math.PI;
+
+    segments.push({
+      width: firstLen,
+      style: `left:${start.x}rpx;top:${start.y}rpx;width:${firstLen}rpx;transform:rotate(${firstAngle}deg);`,
+      state: end.state
+    });
+    segments.push({
+      width: secondLen,
+      style: `left:${bend.x}rpx;top:${bend.y}rpx;width:${secondLen}rpx;transform:rotate(${secondAngle}deg);`,
+      state: end.state
+    });
+
+    bends.push({
+      style: `left:${bend.x}rpx;top:${bend.y}rpx;`,
+      state: end.state
+    });
+  }
+
+  return {
+    width,
+    height,
+    points: relaxedPoints,
+    segments,
+    bends
+  };
+}
+
+function decorateDayPlan(dayPlan, currentStepIndex) {
+  if (!dayPlan || !Array.isArray(dayPlan.items)) {
+    return dayPlan;
+  }
+
+  return {
+    ...dayPlan,
+    routeSketch: buildRouteSketch(dayPlan, currentStepIndex),
+    items: dayPlan.items.map((item, index) => ({
+      ...item,
+      routeSketch: buildRouteSketch(dayPlan, index),
+      progressIndex: index,
+      progressState: index < currentStepIndex ? 'done' : index === currentStepIndex ? 'current' : 'todo',
+      progressLiftClass: index % 2 === 0 ? 'lift-even' : 'lift-odd'
+    }))
+  };
+}
+
 Page({
   data: {
     destination: '苏州',
@@ -97,7 +258,12 @@ Page({
     destinations: cleanDestinations.map((item) => item.name),
     route: null,
     currentDayIndex: 0,
+    currentDayPlan: null,
+    currentRouteStepIndex: 0,
     dayMap: null,
+    mapScale: 13,
+    routeRevealScale: 15,
+    showRoutePolyline: false,
     modeMeta: {
       relaxed: {
         title: '松弛游',
@@ -144,7 +310,11 @@ Page({
     this.setData({
       route,
       currentDayIndex: 0,
-      dayMap: route ? this.buildDayMap(route, 0) : null
+      currentDayPlan: route && route.dayPlans ? decorateDayPlan(route.dayPlans[0], 0) : null,
+      currentRouteStepIndex: 0,
+      dayMap: route ? this.buildDayMap(route, 0) : null,
+      mapScale: 13,
+      showRoutePolyline: false
     });
   },
 
@@ -158,6 +328,14 @@ Page({
     const dayCluster =
       dayPlan.items.map((item) => item.areaCluster).find((cluster) => cluster && cluster !== 'general') ||
       getAreaCluster(dayPlan.area);
+    const dayClusters = Array.from(
+      new Set(
+        dayPlan.items
+          .map((item) => item.areaCluster || getAreaCluster(item.area || item.placeName || ''))
+          .filter((cluster) => cluster && cluster !== 'general')
+      )
+    );
+    const hasMixedClusters = dayClusters.length > 1;
 
     const typePalette = {
       spot: {
@@ -195,24 +373,17 @@ Page({
 
         const clusterBounds =
           destinationBounds && destinationBounds.clusters ? destinationBounds.clusters[point.areaCluster] : null;
-        if (clusterBounds && !isPointInBounds(point, clusterBounds)) {
+        if (!hasMixedClusters && clusterBounds && !isPointInBounds(point, clusterBounds)) {
           return false;
         }
 
         if (
+          !hasMixedClusters &&
           dayCluster !== 'general' &&
           point.areaCluster !== 'general' &&
           point.areaCluster !== dayCluster &&
           point.placeType !== 'hotel'
         ) {
-          return false;
-        }
-
-        if (point.placeType === 'food' && point.trustLevel !== 'high') {
-          return false;
-        }
-
-        if (point.placeType === 'hotel' && point.trustLevel === 'low') {
           return false;
         }
 
@@ -234,25 +405,26 @@ Page({
       };
     }
 
+    const startPoint = points[0];
+    const endPoint = points[points.length - 1];
     return {
       markers: points.map((point, index) => {
-        const isStart = index === 0;
-        const isEnd = index === points.length - 1;
-        const palette = typePalette[point.placeType] || typePalette.spot;
         return {
           id: point.id,
           latitude: point.latitude,
           longitude: point.longitude,
-          width: isStart || isEnd ? 34 : 28,
-          height: isStart || isEnd ? 44 : 36,
-          callout: {
-            content: `${isStart ? '起点' : isEnd ? '终点' : `${point.sequence}.`} ${point.title}`,
-            color: '#ffffff',
-            fontSize: 12,
-            borderRadius: 8,
-            padding: 6,
-            bgColor: isStart ? '#0f766e' : isEnd ? '#1f2937' : palette.color,
-            display: 'ALWAYS'
+          width: index === 0 || index === points.length - 1 ? 30 : 24,
+          height: index === 0 || index === points.length - 1 ? 30 : 24,
+          alpha: 0.98,
+          label: {
+            content: `${point.sequence}`,
+            color: '#111827',
+            fontSize: 10,
+            borderRadius: 999,
+            borderWidth: 1,
+            borderColor: 'rgba(17, 24, 39, 0.10)',
+            bgColor: 'rgba(255, 255, 255, 0.94)',
+            padding: 4
           }
         };
       }),
@@ -262,14 +434,14 @@ Page({
             latitude: point.latitude,
             longitude: point.longitude
           })),
-          color: this.data.mode === 'hardcore' ? '#1f2937' : '#8b6f47',
+          color: this.data.mode === 'hardcore' ? '#8792a3' : '#b59b7a',
           width: 4,
           dottedLine: false
         }
       ],
       center: {
-        latitude: points[0].latitude,
-        longitude: points[0].longitude
+        latitude: startPoint.latitude,
+        longitude: startPoint.longitude
       },
       pathNames: points.map((point) => ({
         title: point.title,
@@ -281,10 +453,9 @@ Page({
       legend: [
         { label: '起点', color: '#0f766e' },
         { label: '终点', color: '#1f2937' },
-        { label: typePalette.spot.label, color: typePalette.spot.color },
-        { label: typePalette.food.label, color: typePalette.food.color },
-        { label: typePalette.hotel.label, color: typePalette.hotel.color },
-        { label: typePalette.base.label, color: typePalette.base.color }
+        { label: typePalette.spot.label, color: '#8b6f47' },
+        { label: typePalette.food.label, color: '#b45309' },
+        { label: typePalette.hotel.label, color: '#6d28d9' }
       ]
     };
   },
@@ -305,9 +476,52 @@ Page({
 
   onDayMapChange(e) {
     const index = Number(e.currentTarget.dataset.index);
+    const nextDayPlan = this.data.route && this.data.route.dayPlans ? this.data.route.dayPlans[index] : null;
     this.setData({
       currentDayIndex: index,
-      dayMap: this.buildDayMap(this.data.route, index)
+      currentDayPlan: decorateDayPlan(nextDayPlan, 0),
+      currentRouteStepIndex: 0,
+      dayMap: this.buildDayMap(this.data.route, index),
+      mapScale: 13,
+      showRoutePolyline: false
+    });
+  },
+
+  onRouteProgressTap(e) {
+    const index = Number(e.currentTarget.dataset.index);
+    if (!Number.isFinite(index) || index === this.data.currentRouteStepIndex) {
+      return;
+    }
+
+    const currentDayPlan =
+      this.data.route && this.data.route.dayPlans
+        ? decorateDayPlan(this.data.route.dayPlans[this.data.currentDayIndex], index)
+        : null;
+
+    this.setData({
+      currentRouteStepIndex: index,
+      currentDayPlan
+    });
+  },
+
+  onRouteMapRegionChange(e) {
+    if (!e || !e.detail || e.detail.type !== 'end') {
+      return;
+    }
+
+    const nextScale = Number(e.detail.scale);
+    if (!Number.isFinite(nextScale)) {
+      return;
+    }
+
+    const showRoutePolyline = nextScale >= this.data.routeRevealScale;
+    if (nextScale === this.data.mapScale && showRoutePolyline === this.data.showRoutePolyline) {
+      return;
+    }
+
+    this.setData({
+      mapScale: nextScale,
+      showRoutePolyline
     });
   },
 

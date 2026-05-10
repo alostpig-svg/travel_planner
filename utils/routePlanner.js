@@ -108,12 +108,14 @@ function getAreaCluster(text) {
   const value = (text || '').toLowerCase();
   if (includesAny(value, ['太湖', '西山'])) return 'xishan';
   if (includesAny(value, ['金鸡湖'])) return 'jinji';
+  if (includesAny(value, ['陶阳里', '御窑', '陶溪川', '湖田', '三宝', '观音阁'])) return 'jingdezhen';
   if (includesAny(value, ['平江', '观前', '古城', '山塘', '十全', '仓街', '拙政园', '苏州博物馆', '网师园', '双塔'])) return 'oldtown';
   return 'general';
 }
 
 function getClusterPool(foodList, cluster) {
   if (cluster === 'xishan') return foodList.filter((item) => getAreaCluster(item.area) === 'xishan');
+  if (cluster === 'jingdezhen') return foodList.filter((item) => getAreaCluster(item.area) === 'jingdezhen');
   if (cluster === 'oldtown') return foodList.filter((item) => getAreaCluster(item.area) === 'oldtown');
   if (cluster === 'jinji') return foodList.filter((item) => getAreaCluster(item.area) === 'jinji');
   return foodList;
@@ -169,6 +171,9 @@ function inferAreaCluster(city, item) {
   }
   if (text.includes('jinji') || text.includes('金鸡湖')) {
     return 'jinji';
+  }
+  if (text.includes('jingdezhen') || text.includes('陶阳里') || text.includes('御窑') || text.includes('陶溪川') || text.includes('湖田') || text.includes('三宝') || text.includes('观音阁')) {
+    return 'jingdezhen';
   }
   if (text.includes('pingjiang') || text.includes('观前') || text.includes('山塘') || text.includes('平江') || text.includes('十全')) {
     return 'oldtown';
@@ -745,6 +750,83 @@ function buildCustomRouteFromConfigs(city, configs) {
   };
 }
 
+function buildJingdezhenRoute(city, input) {
+  const configsByDay = {
+    1: [
+      {
+        title: '陶阳里与御窑主线',
+        area: '陶阳里 / 御窑博物院',
+        totalDuration: '7-8小时',
+        trafficSummary: '先把陶阳里、御窑和老城中轴串起来，第一次来最适合这条线。',
+        slots: [
+          { startTime: '09:00', endTime: '09:25', action: '慢出发 / 进入老城节奏', type: 'base' },
+          { startTime: '09:40', endTime: '11:10', action: '上午主线：陶阳里历史文化街区', type: 'spot', placeId: 'jdz_spot_1' },
+          { startTime: '11:25', endTime: '12:40', action: '午餐：老城顺路正餐', type: 'food', placeId: 'jdz_food_9' },
+          { startTime: '13:00', endTime: '14:30', action: '下午主线：御窑博物院', type: 'spot', placeId: 'jdz_spot_2' },
+          { startTime: '14:50', endTime: '15:30', action: '补给：咖啡 / 茶歇', type: 'food', placeId: 'jdz_food_11' },
+          { startTime: '15:50', endTime: '17:10', action: '傍晚：老城补拍 / 慢逛', type: 'spot', placeId: 'jdz_spot_5' },
+          { startTime: '17:30', endTime: '19:00', action: '晚餐：回到陶溪川附近收口', type: 'food', placeId: 'jdz_food_6' }
+        ]
+      }
+    ],
+    2: [
+      {
+        title: '陶溪川与古窑活态线',
+        area: '陶溪川 / 湖田',
+        totalDuration: '8-9小时',
+        trafficSummary: '这一天把创意街区、窑址和手作体验放在一起，路线更像景德镇的当代表达。',
+        slots: [
+          { startTime: '09:10', endTime: '09:35', action: '出发 / 切换到陶溪川节奏', type: 'base' },
+          { startTime: '09:50', endTime: '11:20', action: '上午主线：陶溪川创意街区', type: 'spot', placeId: 'jdz_spot_3' },
+          { startTime: '11:40', endTime: '12:40', action: '午餐：炒粉 / 本地小吃', type: 'food', placeId: 'jdz_food_6' },
+          { startTime: '13:00', endTime: '14:10', action: '下午主线：湖田古瓷窑址', type: 'spot', placeId: 'jdz_spot_5' },
+          { startTime: '14:30', endTime: '15:20', action: '补给：咖啡 / 茶歇', type: 'food', placeId: 'jdz_food_11' },
+          { startTime: '15:40', endTime: '16:55', action: '傍晚：手作 / 逛店 / 选器物', type: 'spot', placeId: 'jdz_spot_2' },
+          { startTime: '17:20', endTime: '19:00', action: '晚餐：陶溪川一带收尾', type: 'food', placeId: 'jdz_food_9' }
+        ]
+      },
+      {
+        title: '三宝慢行收尾',
+        area: '三宝',
+        totalDuration: '7-8小时',
+        trafficSummary: '最后一天把三宝、观音阁和瓷谷放慢，适合把景德镇的慢层补齐。',
+        slots: [
+          { startTime: '09:00', endTime: '09:25', action: '慢出发 / 不赶节奏', type: 'base' },
+          { startTime: '09:50', endTime: '11:10', action: '上午主线：观音阁陶耕艺术聚落', type: 'spot', placeId: 'jdz_spot_4' },
+          { startTime: '11:30', endTime: '12:20', action: '午餐：三宝一带轻正餐', type: 'food', placeId: 'jdz_food_11' },
+          { startTime: '12:40', endTime: '14:10', action: '下午主线：三宝国际瓷谷', type: 'spot', placeId: 'jdz_spot_6' },
+          { startTime: '14:30', endTime: '15:05', action: '补给：咖啡 / 茶歇', type: 'food', placeId: 'jdz_food_11' },
+          { startTime: '15:20', endTime: '16:30', action: '慢逛：工作室 / 选购 / 留白', type: 'spot', placeId: 'jdz_spot_3' },
+          { startTime: '17:00', endTime: '18:20', action: '晚餐：收尾后返程', type: 'food', placeId: 'jdz_food_6' }
+        ]
+      }
+    ]
+  };
+
+  const configs =
+    input.days <= 2
+      ? configsByDay[Math.min(input.days, 2)]
+      : [
+          ...configsByDay[2],
+          ...Array.from({ length: input.days - 2 }, (_, index) => ({
+            title: `景德镇慢旅行 Day ${index + 3}`,
+            area: '三宝 / 陶溪川',
+            totalDuration: '6-7小时',
+            trafficSummary: '补给、手作、咖啡和返程留白，不再堆叠跨区移动。',
+            slots: [
+              { startTime: '09:30', endTime: '09:55', action: '慢出发 / 调整节奏', type: 'base' },
+              { startTime: '10:10', endTime: '11:20', action: '上午补位：陶溪川或三宝', type: 'spot', placeId: 'jdz_spot_3' },
+              { startTime: '11:40', endTime: '12:30', action: '午餐：顺路补一顿', type: 'food', placeId: 'jdz_food_6' },
+              { startTime: '13:00', endTime: '14:10', action: '下午补位：观音阁或湖田', type: 'spot', placeId: 'jdz_spot_4' },
+              { startTime: '14:30', endTime: '15:05', action: '补给：咖啡 / 茶歇', type: 'food', placeId: 'jdz_food_11' },
+              { startTime: '15:20', endTime: '16:30', action: '留白：选器物 / 发呆 / 慢逛', type: 'spot', placeId: 'jdz_spot_6' }
+            ]
+          }))
+        ];
+
+  return buildCustomRouteFromConfigs(city, configs.slice(0, input.days));
+}
+
 function buildHainanRelaxedRoute(city, input) {
   const configsByDay = {
     1: [
@@ -1174,6 +1256,13 @@ function buildStayPlan(city, input, dayPlans) {
       nightStrategy = '建议全程住古城东线或古城中心。';
       candidateIds = ['sz_hotel_oldtown_2', 'sz_hotel_oldtown_1', 'sz_hotel_oldtown_3'];
     }
+  } else if (city.id === 'jingdezhen') {
+    areaAdvice = '优先住陶阳里或陶溪川附近，御窑、老城和夜逛都会更顺。';
+    nightStrategy =
+      input.days >= 3
+        ? '推荐“陶阳里 1 晚 + 陶溪川连住”，把老城主线和慢逛夜生活拆开。'
+        : '如果只住一处，优先陶阳里一侧，第一次来更适合作为主落点。';
+    candidateIds = ['jdz_hotel_1', 'jdz_hotel_2'];
   }
 
   const items = candidateIds
@@ -1515,16 +1604,26 @@ function generateRoute(input) {
       ? input.mode === 'relaxed'
         ? buildSuzhouRelaxedRoute(city, input)
         : buildSuzhouHardcoreRoute(city, input)
-      : buildGenericRoute(city, input);
+      : city.id === 'jingdezhen'
+        ? buildJingdezhenRoute(city, input)
+        : buildGenericRoute(city, input);
 
-  const paceDesc =
-    input.mode === 'hardcore'
-      ? city.id === 'suzhou'
-        ? '优先覆盖经典地标和代表性片区，转场更紧凑，适合高效刷城。'
-        : '高密度打卡，适合时间紧张的行程。'
-      : city.id === 'suzhou'
-        ? '更强调古城慢逛、休息点和顺路收尾的松弛路线。'
-        : '节奏更松弛，适合慢慢体验城市。';
+  let paceDesc;
+  if (input.mode === 'hardcore') {
+    paceDesc =
+      city.id === 'jingdezhen'
+        ? '优先把陶阳里、御窑、陶溪川和三宝压缩成一条更完整的瓷都骨架线，适合时间紧但想看懂景德镇的人。'
+        : city.id === 'suzhou'
+          ? '优先覆盖经典地标和代表性片区，转场更紧凑，适合高效刷城。'
+          : '高密度打卡，适合时间紧张的行程。';
+  } else {
+    paceDesc =
+      city.id === 'jingdezhen'
+        ? '更强调陶瓷体验、街区漫逛和住宿联动，适合把景德镇玩得更慢更完整。'
+        : city.id === 'suzhou'
+          ? '更强调古城慢逛、休息点和顺路收尾的松弛路线。'
+          : '节奏更松弛，适合慢慢体验城市。';
+  }
 
   const enriched = attachStayToDayPlans(
     city,
@@ -1911,38 +2010,11 @@ function buildEnhancedStayPlanV2(city, input, dayPlans) {
       : null;
   }
 
-  if (city.id === 'lingshui' || city.id === 'wanning') {
-    const hotels = [...(city.hotels || [])].sort((a, b) => (b.recommendScore || 0) - (a.recommendScore || 0));
-    if (!hotels.length) return null;
-    return {
-      title: '住宿建议',
-      summary:
-        city.id === 'lingshui'
-          ? '陵水当前更适合作为 1 天游或 1 晚外扩目的地，优先住清水湾附近。'
-          : '万宁当前更适合作为海岸线外扩目的地，优先住石梅湾或神州半岛附近。',
-      nightStrategy:
-        city.id === 'lingshui'
-          ? '推荐清水湾住 1 晚，次日再慢慢收尾。'
-          : '推荐石梅湾或神州半岛住 1 晚，不建议当天来回压缩。',
-      items: hotels.slice(0, 2).map((item) => ({
-        id: item.id,
-        name: item.name,
-        area: item.area,
-        decision: item.decision,
-        nightlyPriceRange: item.nightlyPriceRange,
-        stayStyle: item.stayStyle,
-        routeRole: item.routeRole,
-        sourcePlatform: item.sourcePlatform,
-        qualityLabel: (item.avgCost || 0) >= 800 ? '高品质度假型' : '中高品质稳定型'
-      }))
-    };
-  }
-
   return buildStayPlan(city, input, dayPlans);
 }
 
 function attachEnhancedStayToDayPlansV2(city, input, dayPlans, stayPlan, selectedPlaces) {
-  if (!['sanya', 'lingshui', 'wanning'].includes(city.id)) {
+  if (city.id !== 'sanya') {
     return attachStayToDayPlans(city, input, dayPlans, stayPlan, selectedPlaces);
   }
 
@@ -1957,8 +2029,6 @@ function attachEnhancedStayToDayPlansV2(city, input, dayPlans, stayPlan, selecte
 
   const defaultHotelId = stayPlan.items[0].id;
   const nightlyHotelIds = dayPlans.map((day) => {
-    if (city.id === 'lingshui') return stayPlan.items[0].id;
-    if (city.id === 'wanning') return stayPlan.items[0].id;
 
     const area = day.area || '';
     if (area.includes('市区') || area.includes('亚龙湾')) {
@@ -2060,20 +2130,30 @@ function generateRouteV3(input) {
         ? input.mode === 'relaxed'
           ? buildSanyaRelaxedRoute(city, input)
           : buildSanyaHardcoreRoute(city, input)
-        : buildGenericRoute(city, input);
+        : city.id === 'jingdezhen'
+          ? buildJingdezhenRoute(city, input)
+          : buildGenericRoute(city, input);
 
-  const paceDesc =
-    input.mode === 'hardcore'
-      ? city.id === 'sanya'
+  let paceDesc;
+  if (input.mode === 'hardcore') {
+    paceDesc =
+      city.id === 'sanya'
         ? '优先把三亚核心海边、公路观景和城市日落线压缩串联，适合时间紧但仍想玩明白三亚的人。'
         : city.id === 'suzhou'
           ? '优先覆盖经典地标和代表性片区，转场更紧凑，适合高效刷城。'
-          : '高密度打卡，适合时间紧张的行程。'
-      : city.id === 'sanya'
+          : city.id === 'jingdezhen'
+            ? '优先把陶阳里、御窑、陶溪川和三宝压缩成一条更完整的瓷都骨架线，适合时间紧但想看懂景德镇的人。'
+            : '高密度打卡，适合时间紧张的行程。';
+  } else {
+    paceDesc =
+      city.id === 'sanya'
         ? '更强调海边留白、正餐层次和住宿联动，适合把三亚玩得舒服而不是一直赶路。'
         : city.id === 'suzhou'
           ? '更强调古城慢逛、休息点和顺路收尾的松弛路线。'
-          : '节奏更松弛，适合慢慢体验城市。';
+          : city.id === 'jingdezhen'
+            ? '更强调陶瓷体验、街区漫逛和住宿联动，适合把景德镇玩得更慢更完整。'
+            : '节奏更松弛，适合慢慢体验城市。';
+  }
 
   const enriched = attachEnhancedStayToDayPlansV2(
     city,
