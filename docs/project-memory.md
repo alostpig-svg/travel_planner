@@ -2,42 +2,57 @@
 
 ## Goal
 - Build a WeChat mini program for travel planning.
-- Focus on young users who care about real experience, not ad-heavy content.
-- Core output: a clear, executable day-by-day route table.
+- Target users are young travelers who care about real experience over ad-heavy recommendations.
+- Core output is a clear, executable, day-by-day route plan.
 
-## Current Product Decisions
-- Modes: `relaxed` and `hardcore`.
-- Main cities: `Suzhou`, `Jingdezhen`, `Sanya`.
-- `Hainan` was removed as a top-level entry.
-- Home page was simplified and `今日推荐` was removed.
-- Route map was added and must show only trustworthy markers.
+## Current Product State
+- Modes are `relaxed` and `hardcore`.
+- Main cities are `Suzhou`, `Jingdezhen`, and `Sanya`.
+- `Hainan` is no longer a top-level entry on the home page.
+- The old home recommendation block was removed.
+- Route pages already rely on map data and marker filtering.
 
-## Important Logic
-- Content should be filtered and stored locally first.
-- Social platforms are only for assisted collection, not the live source for every user request.
-- Hotel selection should favor mid/high quality only.
-- Food selection must separate `main meal` vs `snack/drink`.
-- No duplicate meals across days.
-- Map markers need region checks and confidence filtering.
+## Home Page Decisions
+- A discovery preview module sits between the city picker and `Build Route`.
+- Discovery preview images now use local static assets under `assets/discovery-previews/`.
+- The preview interaction is currently moving toward an Apple Watch-like selection style.
+- Only the center item should show text.
+- Address text should not be shown under the preview icon.
+- Edge items should behave as supporting bubbles, not equal cards.
+
+## Content / Routing Logic
+- Content should be collected, filtered, and stored locally first.
+- Social platforms such as Xiaohongshu are for assisted collection, not live runtime dependency.
+- Hotel recommendations should stay in the mid/high quality range.
+- Food planning should distinguish `main meal` from `snack/drink`.
+- Duplicate meals across days should be avoided.
+- Map markers must stay region-correct and confidence-checked.
 
 ## City Notes
-- `Suzhou`: focus on old town, Jinji Lake, and Taihu/Xishan.
-- `Suzhou` content should include real food, cafes, hotels, and route-linked map points.
-- `Jingdezhen`: focus on `陶阳里-御窑博物院`, `陶溪川创意街区`, `古窑-老城南线`, and `三宝国际瓷谷`.
-- `Jingdezhen` content should include museum-led history, heritage layers like `观音阁陶耕艺术聚落` and `湖田古瓷窑址`, night market / street activity, local snacks, and stay options near陶溪川 or陶阳里.
-- `Jingdezhen` now has a dedicated 3-day route template instead of relying only on the generic city route.
-- `Sanya`: core issue fixed was wrong markers, especially Houhai Village.
-- `Sanya` is split into `haitang`, `yalong`, and `urban` clusters for routing.
+- `Suzhou`: continue focusing on old town, Jinji Lake, and Taihu/Xishan.
+- `Suzhou` should keep real food, cafe, hotel, and route-linked map point data.
+- `Jingdezhen`: continue focusing on Taoyangli, Imperial Kiln Museum, Taoxichuan, old city / ceramic culture lines, and Sanbao area.
+- `Jingdezhen` already has a dedicated multi-day route direction and should keep expanding food and map coordinates.
+- `Sanya`: earlier marker issues were fixed around Houhai and related clusters, but map correctness must stay under review whenever route points change.
+- `Sanya` routing is organized around `haitang`, `yalong`, and `urban` clusters.
+
+## Files Recently Touched
+- `pages/index/index.js`
+- `pages/index/index.wxml`
+- `pages/index/index.wxss`
+- `assets/discovery-previews/`
 
 ## Git / Handoff
 - Repo remote: `https://github.com/alostpig-svg/travel_planner.git`
 - Default branch: `main`
+- Latest synced commit on `main`: `a112b82`
+- Current status should be checked with `git status`
 - On a new computer:
   - `git clone`
   - `git pull`
   - read this file first
 
-## What To Do Next
-- Keep expanding city content as structured local data.
-- Keep refining route templates per city.
-- Keep map data aligned with real regions.
+## Next Recommended Work
+- Continue refining the Apple Watch-like discovery selector until drag feel and spatial layout are polished.
+- Keep expanding structured city content locally instead of relying on ad-hoc runtime lookup.
+- Keep validating route map coordinates whenever food or spot entries change.
