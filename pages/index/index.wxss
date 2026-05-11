@@ -419,6 +419,144 @@
   margin-top: 0;
 }
 
+.discovery-card {
+  overflow: hidden;
+  padding: 12rpx;
+}
+
+.discovery-board {
+  margin-top: 6rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10rpx;
+}
+
+.discovery-mini-card {
+  position: relative;
+  min-height: 204rpx;
+  padding: 8rpx;
+  border-radius: 22rpx;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(245, 247, 250, 0.98) 0%, rgba(238, 242, 247, 0.96) 100%);
+  border: 1rpx solid rgba(17, 24, 39, 0.06);
+  box-shadow: 0 18rpx 36rpx rgba(17, 24, 39, 0.08);
+}
+
+.watch-stage {
+  position: relative;
+  width: 100%;
+  height: 188rpx;
+  overflow: hidden;
+}
+
+.watch-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms ease;
+  will-change: transform, opacity;
+}
+
+.watch-node-bubble {
+  position: relative;
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f3f4f6;
+  border: 2rpx solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10rpx 18rpx rgba(17, 24, 39, 0.1);
+  transition: width 360ms cubic-bezier(0.22, 1, 0.36, 1), height 360ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms ease;
+}
+
+.watch-node.active .watch-node-bubble {
+  width: 108rpx;
+  height: 108rpx;
+  box-shadow: 0 16rpx 28rpx rgba(17, 24, 39, 0.16);
+}
+
+.watch-node-cover {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.watch-node-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 48%), linear-gradient(180deg, rgba(17, 24, 39, 0.04) 0%, rgba(17, 24, 39, 0.34) 100%);
+}
+
+.watch-node-label {
+  text-align: center;
+  transform: translateY(0);
+  max-width: 180rpx;
+  margin-top: 2rpx;
+}
+
+.watch-node-label.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.watch-node-title {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.watch-node-center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -52%);
+  z-index: 4;
+}
+
+.watch-node-ring-a {
+  left: 8rpx;
+  top: 18rpx;
+  transform: translate(0, 0);
+  z-index: 2;
+}
+
+.watch-node-ring-b {
+  right: 10rpx;
+  top: 12rpx;
+  transform: translate(0, 0);
+  z-index: 2;
+}
+
+.watch-node-ring-c {
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0);
+  z-index: 1;
+}
+
+.watch-node:not(.active) .watch-node-bubble {
+  opacity: 0.7;
+  transform: scale(0.92);
+}
+
+.watch-node.active {
+  z-index: 5;
+}
+
+.watch-node.active .watch-node-bubble {
+  transform: scale(1);
+}
+
+.spot-card {
+  background: linear-gradient(180deg, rgba(246, 248, 251, 0.98) 0%, rgba(239, 243, 248, 0.96) 100%);
+}
+
+.food-card {
+  background: linear-gradient(180deg, rgba(250, 247, 243, 0.98) 0%, rgba(243, 238, 232, 0.96) 100%);
+}
+
 .city-dot {
   width: 6rpx;
   height: 6rpx;

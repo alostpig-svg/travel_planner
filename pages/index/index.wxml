@@ -80,6 +80,42 @@
     </view>
   </view>
 
+  <view class="section card discovery-card">
+    <view class="discovery-board">
+      <view class="discovery-mini-card spot-card" data-kind="spot" bindtouchstart="onPreviewTouchStart" bindtouchmove="onPreviewTouchMove" bindtouchend="onPreviewTouchEnd" bindtouchcancel="onPreviewTouchCancel">
+        <view class="watch-stage" style="{{spotStageStyle}}">
+          <block wx:for="{{cityDiscoveryPreview.spotItems}}" wx:key="loopId">
+            <view class="watch-node watch-node-{{item.slot}} {{item.active ? 'active' : ''}}">
+              <view class="watch-node-bubble">
+                <image class="watch-node-cover" src="{{item.cover}}" mode="aspectFill" />
+                <view class="watch-node-overlay"></view>
+              </view>
+              <view wx:if="{{item.active}}" class="watch-node-label active">
+                <view class="watch-node-title">{{item.name}}</view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <view class="discovery-mini-card food-card" data-kind="food" bindtouchstart="onPreviewTouchStart" bindtouchmove="onPreviewTouchMove" bindtouchend="onPreviewTouchEnd" bindtouchcancel="onPreviewTouchCancel">
+        <view class="watch-stage" style="{{foodStageStyle}}">
+          <block wx:for="{{cityDiscoveryPreview.foodItems}}" wx:key="loopId">
+            <view class="watch-node watch-node-{{item.slot}} {{item.active ? 'active' : ''}}">
+              <view class="watch-node-bubble">
+                <image class="watch-node-cover" src="{{item.cover}}" mode="aspectFill" />
+                <view class="watch-node-overlay"></view>
+              </view>
+              <view wx:if="{{item.active}}" class="watch-node-label active">
+                <view class="watch-node-title">{{item.dishName}}</view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <view class="section card generator-card">
     <view class="row section-head compact-head">
       <view class="title-lg">Build Route</view>
